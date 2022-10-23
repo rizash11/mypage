@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-type mypage struct {
+type application struct {
 	infoLog  *log.Logger
 	errorLog *log.Logger
 }
@@ -19,7 +19,7 @@ func main() {
 	infoLog := log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
 	errorLog := log.New(os.Stderr, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
 
-	mp := &mypage{
+	app := &application{
 		infoLog:  infoLog,
 		errorLog: errorLog,
 	}
@@ -27,6 +27,10 @@ func main() {
 	srv := &http.Server{
 		Addr:     "localhost" + *myAddr,
 		ErrorLog: errorLog,
-		Handler:  mp.routes(),
+		Handler:  app.routes(),
 	}
+
+	infoLog.Println("Запуск веб-сервера на http://localhost" + *myAddr + "/")
+	err := srv.ListenAndServe()
+	errorLog.Fatal(err)
 }

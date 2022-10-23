@@ -2,9 +2,9 @@ package main
 
 import "net/http"
 
-func (mp *mypage) routes() *http.ServeMux {
+func (app *application) routes() *http.ServeMux {
 	myRouter := http.NewServeMux()
-	myRouter.HandleFunc("/", mp.home)
+	myRouter.HandleFunc("/", app.home)
 
 	return myRouter
 }
